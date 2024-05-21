@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitrine Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Nome da Loja</h1>
+    </header>
+    <section class="owner">
+        <img src="imagens/man.png" alt="Dona da Loja">
+        <h2>Nome da Dona</h2>
+    </section>
+    <section class="products">
+        <div class="product">
+            <img src="imagens/foto-heitor_files/256480507_127966106296695_8606988874806624354_n.jpg" alt="foto heitor">
+            <a href="imagens/foto-heitor_files/256480507_127966106296695_8606988874806624354_n.jpg" target="_blank">Ver no Instagram</a>
+            <label>
+                <input type="checkbox" name="product" value="Produto 1"> Adicionar ao pedido
+            </label>
+        </div>
+        <!-- Repita a estrutura acima para cada produto -->
+    </section>
+    <section class="order-form">
+        <h2>Faça seu pedido</h2>
+        <form id="orderForm">
+            <div>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="address">Endereço:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div>
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message"></textarea>
+            </div>
+            <button type="submit">Enviar Pedido</button>
+        </form>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>

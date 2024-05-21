@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+}
+
+.owner {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.owner img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.product {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    width: 200px;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.order-form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 2rem;
+    width: 300px;
+    margin-bottom: 2rem;
+}
+
+.order-form h2 {
+    margin-top: 0;
+}
+
+.order-form div {
+    margin-bottom: 1rem;
+}
+
+.order-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.order-form input,
+.order-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order-form button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.order-form button:hover {
+    background-color: #555;
+}
