@@ -13,7 +13,6 @@
     </script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
@@ -34,7 +33,8 @@
             </ul>
         </nav>
     </header>
-    <section class="products">
+    
+    <section class="products slider">
         <div class="product">
             <h2>Boliche</h2>
             <img src="imagens/pro-1.png" alt="Produto 1">
@@ -42,8 +42,23 @@
                 <input type="checkbox" name="product" value="Boliche"> Adicionar ao pedido
             </label>
         </div>
+        <div class="product">
+            <h2>Produto 2</h2>
+            <img src="imagens/pro-1.png" alt="Produto 2">
+            <label>
+                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
+            </label>
+        </div>
+        <div class="product">
+            <h2>Produto 2</h2>
+            <img src="imagens/pro-1.png" alt="Produto 2">
+            <label>
+                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
+            </label>
+        </div>
         <!-- Adicione mais produtos conforme necessário -->
     </section>
+
     <section class="order-form">
         <h2>Faça seu pedido</h2>
         <form id="orderForm">
@@ -70,10 +85,29 @@
             <button type="submit">Enviar Pedido</button>
         </form>
     </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script src="script.js"></script>
-    <footer><p>&copy; 2024 André Gomes. Todos os direitos reservados Faça seu site comigo<a href=https://contate.me/andregomesdesenvolvedorweb target="_blank"> clique aqui</a>.</p></footer>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                centerMode: true,
+                variableWidth: true,
+                adaptiveHeight: true
+            });
+        });
+    </script>
+    <footer>
+        <p>&copy; 2024 André Gomes. Todos os direitos reservados. Faça seu site comigo <a href="https://wa.me/+5583988374498?text=Eu%20quero%20fazer%20um%20pedido" target="_blank">clique aqui</a>.</p>
+    </footer>
 </body>
 </html>
+
 
 
 
