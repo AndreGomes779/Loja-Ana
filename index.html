@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript">
         (function() {
-            emailjs.init("YUW__RVutT4sbgedp"); 
+            emailjs.init("YUW__RVutT4sbgedp");
         })();
     </script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
@@ -18,13 +18,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+
     <header class="nomeempresa">
         <h1><span class="maior">O</span> <span class="contorno">Meu Mini</span> <span class="verde">M</span><span class="amarelo">undo</span></h1>
         <img src="imagens/meuminimundo.png" alt="logo">
-        <div class="menu-icon" id="menuIcon">
-            ☰
-        </div>
+        <div class="menu-icon" id="menuIcon">☰</div>
         <nav class="menu" id="menu">
             <ul>
                 <li><a href="#quem-somos" target="_blank">Quem Somos</a></li>
@@ -37,59 +35,49 @@
     <section class="products slider">
         <div class="product">
             <h2>Boliche</h2>
+            <p class="price">R$ 50,00</p>
             <img src="imagens/pro-1.png" alt="Produto 1">
             <label>
-                <input type="checkbox" name="product" value="Boliche"> Adicionar ao pedido
+                <input type="checkbox" name="product" value="Boliche" data-price="50"> Adicionar ao pedido
             </label>
         </div>
         <div class="product">
             <h2>Produto 2</h2>
+            <p class="price">R$ 30,00</p>
             <img src="imagens/pro-1.png" alt="Produto 2">
             <label>
-                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
+                <input type="checkbox" name="product" value="Produto 2" data-price="30"> Adicionar ao pedido
             </label>
         </div>
         <div class="product">
             <h2>Produto 3</h2>
-            <img src="imagens/pro-1.png" alt="Produto 2">
+            <p class="price">R$ 20,00</p>
+            <img src="imagens/pro-1.png" alt="Produto 3">
             <label>
-                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
+                <input type="checkbox" name="product" value="Produto 3" data-price="20"> Adicionar ao pedido
             </label>
         </div>
         <div class="product">
             <h2>Produto 4</h2>
-            <img src="imagens/pro-1.png" alt="Produto 2">
+            <p class="price">R$ 40,00</p>
+            <img src="imagens/pro-1.png" alt="Produto 4">
             <label>
-                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
+                <input type="checkbox" name="product" value="Produto 4" data-price="40"> Adicionar ao pedido
             </label>
         </div>
-        <div class="product">
-            <h2>Produto 2</h2>
-            <img src="imagens/pro-1.png" alt="Produto 2">
-            <label>
-                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
-            </label>
-        </div>
-        <div class="product">
-            <h2>Produto 5</h2>
-            <img src="imagens/pro-1.png" alt="Produto 2">
-            <label>
-                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
-            </label>
-        </div>
-        <div class="product">
-            <h2>Produto 6</h2>
-            <img src="imagens/pro-1.png" alt="Produto 2">
-            <label>
-                <input type="checkbox" name="product" value="Produto 2"> Adicionar ao pedido
-            </label>
-        </div>
-        
         <!-- Adicione mais produtos conforme necessário -->
     </section>
 
     <section class="order-form">
-        <h2>Faça seu pedido</h2>
+        <div class="order-header">
+            <h2>Faça seu pedido</h2>
+            <div class="cart">
+                
+                <h3><i class="fas fa-shopping-cart"></i> <img style="width: 40px;" src="imagens/carrinho.png" alt="carrinho compras"></h3>
+                <ul id="cartItems"></ul>
+                <p>Total: R$ <span id="cartTotal">0.00</span></p>
+            </div>
+        </div>
         <form id="orderForm">
             <div>
                 <label for="name">Nome:</label>
@@ -116,10 +104,11 @@
     </section>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script src="script.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('.slider').slick({
                 dots: true,
                 infinite: true,
@@ -129,6 +118,81 @@
                 variableWidth: true,
                 adaptiveHeight: true
             });
+
+            $('input[name="product"]').change(function() {
+                updateCart();
+            });
+        });
+
+        function updateCart() {
+            let total = 0;
+            let items = [];
+
+            $('input[name="product"]:checked').each(function() {
+                const item = $(this).val();
+                const price = parseFloat($(this).data('price'));
+
+                items.push(item + ' - R$ ' + price.toFixed(2));
+                total += price;
+            });
+
+            $('#cartItems').html(items.map(item => '<li>' + item + '</li>').join(''));
+            $('#cartTotal').text(total.toFixed(2));
+        }
+
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const serviceID = 'service_y0i38sm'; // Substitua pelo seu Service ID
+            const templateID = 'template_zqwj2oh'; // Substitua pelo seu Template ID
+
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+
+            let selectedProducts = [];
+            document.querySelectorAll('input[name="product"]:checked').forEach((checkbox) => {
+                selectedProducts.push(checkbox.value);
+            });
+
+            const params = {
+                name: name,
+                address: address,
+                email: email,
+                phone: phone,
+                message: message,
+                products: selectedProducts.join(', ')
+            };
+
+            // Exibir um indicador de carregamento
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+
+            emailjs.send(serviceID, templateID, params)
+                .then(() => {
+                    alert('Pedido enviado com sucesso!');
+                    document.getElementById('orderForm').reset();
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Enviar Pedido';
+                    updateCart(); // Reset cart
+                })
+                .catch((err) => {
+                    alert('Ocorreu um erro: ' + JSON.stringify(err));
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Enviar Pedido';
+                });
+        });
+
+        document.getElementById('menuIcon').addEventListener('click', function() {
+            var menu = document.getElementById('menu');
+            if (menu.style.display === 'flex') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'flex';
+            }
         });
     </script>
     <footer class="rodape">
@@ -136,6 +200,7 @@
     </footer>
 </body>
 </html>
+
 
 
 
