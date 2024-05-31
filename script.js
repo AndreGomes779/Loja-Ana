@@ -1,55 +1,93 @@
-document.getElementById('orderForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const serviceID = 'service_y0i38sm'; // Substitua pelo seu Service ID
-    const templateID = 'template_zqwj2oh'; // Substitua pelo seu Template ID
-
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const message = document.getElementById('message').value;
-
-    let selectedProducts = [];
-    document.querySelectorAll('input[name="product"]:checked').forEach((checkbox) => {
-        selectedProducts.push(checkbox.value);
+$(document).ready(function() {
+    // Initialize Slick Carousel
+    $('.slider').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        centerMode: true,
+        variableWidth: true,
+        adaptiveHeight: true
     });
 
-    const params = {
-        name: name,
-        address: address,
-        email: email,
-        phone: phone,
-        message: message,
-        products: selectedProducts.join(', ')
-    };
+    // Update cart when products are selected
+    $('input[name="product"]').change(function() {
+        updateCart();
+    });
 
-    // Exibir um indicador de carregamento
-    const submitButton = document.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.textContent = 'Enviando...';
+    // Handle order form submission
+    $('#orderForm').on('submit', function(event) {
+        event.preventDefault();
 
-    emailjs.send(serviceID, templateID, params)
-        .then(() => {
-            alert('Pedido enviado com sucesso!');
-            document.getElementById('orderForm').reset();
-            submitButton.disabled = false;
-            submitButton.textContent = 'Enviar Pedido';
-        })
-        .catch((err) => {
-            alert('Ocorreu um erro: ' + JSON.stringify(err));
-            submitButton.disabled = false;
-            submitButton.textContent = 'Enviar Pedido';
+        const serviceID = 'service_y0i38sm'; // Substitua pelo seu Service ID
+        const templateID = 'template_zqwj2oh'; // Substitua pelo seu Template ID
+
+        const name = $('#name').val();
+        const address = $('#address').val();
+        const email = $('#email').val();
+        const phone = $('#phone').val();
+        const message = $('#message').val();
+
+        let selectedProducts = [];
+        $('input[name="product"]:checked').each(function() {
+            selectedProducts.push($(this).val());
         });
-});
-document.getElementById('menuIcon').addEventListener('click', function() {
-    var menu = document.getElementById('menu');
-    if (menu.style.display === 'flex') {
-        menu.style.display = 'none';
-    } else {
-        menu.style.display = 'flex';
+
+        const params = {
+            name: name,
+            address: address,
+            email: email,
+            phone: phone,
+            message: message,
+            products: selectedProducts.join(', ')
+        };
+
+        // Display loading indicator
+        const submitButton = $('button[type="submit"]');
+        submitButton.prop('disabled', true).text('Enviando...');
+
+        emailjs.send(serviceID, templateID, params)
+            .then(() => {
+                alert('Pedido enviado com sucesso!');
+                $('#orderForm')[0].reset();
+                submitButton.prop('disabled', false).text('Enviar Pedido');
+                updateCart(); // Reset cart
+                // Limpar carrinho e desmarcar produtos após enviar o pedido
+                $('#cartItems').empty();
+                $('#cartTotal').text('0.00');
+                $('input[name="product"]:checked').prop('checked', false);
+            })
+            .catch((err) => {
+                alert('Ocorreu um erro: ' + JSON.stringify(err));
+                submitButton.prop('disabled', false).text('Enviar Pedido');
+            });
+    });
+
+    // Toggle menu visibility on icon click
+    $('#menuIcon').on('click', function() {
+        $('#menu').toggle();
+    });
+
+    function updateCart() {
+        let total = 0;
+        let items = [];
+
+        $('input[name="product"]:checked').each(function() {
+            const item = $(this).val();
+            const price = parseFloat($(this).data('price'));
+
+            items.push(item + ' - R$ ' + price.toFixed(2));
+            total += price;
+        });
+
+        $('#cartItems').html(items.map(item => '<li>' + item + '</li>').join(''));
+        $('#cartTotal').text(total.toFixed(2));
     }
 });
+
+
+
+
 
 
 

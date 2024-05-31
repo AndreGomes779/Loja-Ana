@@ -301,6 +301,10 @@ h1 .maior {
 .slick-dots li.slick-active button:before {
     color: #77b817;
 }
+.quem-somos-section{
+    margin: 80px;
+    text-align: justify;
+}
 
 
 
