@@ -3,6 +3,7 @@ $(document).ready(function() {
     let selectedProducts = [];
     let total = 0;
     let taxaParcelamento = 0;
+    let parcelasSelecionadas = 1; // Inicializa com uma parcela por padrão
 
     // Initialize Slick Carousel
     $('.slider').slick({
@@ -30,14 +31,14 @@ $(document).ready(function() {
         } else if (option === 'parcelado') {
             // Se selecionar "PARCELADO", mostrar opção de parcelamento
             const vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
-            const parcelas = parseInt(vezes);
+            parcelasSelecionadas = parseInt(vezes); // Armazena o número de parcelas selecionadas
 
             // Calcular a taxa de parcelamento
-            if (parcelas === 1) {
+            if (parcelasSelecionadas === 1) {
                 taxaParcelamento = 0.05; // 5% de taxa para 1 parcela
-            } else if (parcelas === 2) {
+            } else if (parcelasSelecionadas === 2) {
                 taxaParcelamento = 0.10; // 10% de taxa para 2 parcelas
-            } else if (parcelas === 3) {
+            } else if (parcelasSelecionadas === 3) {
                 taxaParcelamento = 0.15; // 15% de taxa para 3 parcelas
             } else {
                 alert('Opção inválida. Por favor, escolha 1, 2 ou 3 parcelas.');
@@ -65,11 +66,13 @@ $(document).ready(function() {
         // Obter os produtos selecionados
         let products = selectedProducts.join(', ');
 
-        // Se a opção de pagamento for parcelado, adicionar informações sobre o parcelamento
+        const totalComTaxa = total + (total * taxaParcelamento);
+
+        // Incluir informações sobre parcelamento e valor total no e-mail
         if ($('#pagamento').val() === 'parcelado') {
-            const vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
-            products += ` (${vezes}x)`;
+            products += ` (${parcelasSelecionadas}x)`;
         }
+        products += ` - Total: R$ ${totalComTaxa.toFixed(2)}`;
 
         const params = {
             name: name,
@@ -91,6 +94,8 @@ $(document).ready(function() {
                 submitButton.prop('disabled', false).text('Enviar Pedido');
                 updateCart(); // Reset cart
                 // Limpar carrinho e desmarcar produtos após enviar o pedido
+                selectedProducts = [];
+                total = 0;
                 $('#cartItems').empty();
                 $('#cartTotal').text('0.00');
                 $('input[name="product"]:checked').prop('checked', false);
@@ -125,6 +130,10 @@ $(document).ready(function() {
         $('#cartTotal').text(totalComTaxa.toFixed(2));
     }
 });
+
+
+
+
 
 
 
