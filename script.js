@@ -30,8 +30,17 @@ $(document).ready(function() {
             updateCart();
         } else if (option === 'parcelado') {
             // Se selecionar "PARCELADO", mostrar opção de parcelamento
-            const vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
-            parcelasSelecionadas = parseInt(vezes); // Armazena o número de parcelas selecionadas
+            let vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
+            vezes = parseInt(vezes);
+
+            // Loop até que uma entrada válida seja fornecida
+            while (vezes !== 1 && vezes !== 2 && vezes !== 3) {
+                alert('Opção inválida. Por favor, escolha 1, 2 ou 3 parcelas.');
+                vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
+                vezes = parseInt(vezes);
+            }
+
+            parcelasSelecionadas = vezes; // Armazena o número de parcelas selecionadas
 
             // Calcular a taxa de parcelamento
             if (parcelasSelecionadas === 1) {
@@ -40,9 +49,6 @@ $(document).ready(function() {
                 taxaParcelamento = 0.10; // 10% de taxa para 2 parcelas
             } else if (parcelasSelecionadas === 3) {
                 taxaParcelamento = 0.15; // 15% de taxa para 3 parcelas
-            } else {
-                alert('Opção inválida. Por favor, escolha 1, 2 ou 3 parcelas.');
-                return;
             }
 
             // Atualizar o carrinho
@@ -130,6 +136,7 @@ $(document).ready(function() {
         $('#cartTotal').text(totalComTaxa.toFixed(2));
     }
 });
+
 
 
 
