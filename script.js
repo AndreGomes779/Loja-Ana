@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    // Variáveis globais para manter controle dos produtos selecionados e do valor total
+    let selectedProducts = [];
+    let total = 0;
+    let taxaParcelamento = 0;
+
     // Initialize Slick Carousel
     $('.slider').slick({
         dots: true,
@@ -15,6 +20,35 @@ $(document).ready(function() {
         updateCart();
     });
 
+    // Handle payment options change
+    $('#pagamento').on('change', function() {
+        const option = $(this).val();
+        if (option === 'avista') {
+            // Se selecionar "A VISTA", apenas atualiza o carrinho sem adicionar taxa
+            taxaParcelamento = 0;
+            updateCart();
+        } else if (option === 'parcelado') {
+            // Se selecionar "PARCELADO", mostrar opção de parcelamento
+            const vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
+            const parcelas = parseInt(vezes);
+
+            // Calcular a taxa de parcelamento
+            if (parcelas === 1) {
+                taxaParcelamento = 0.05; // 5% de taxa para 1 parcela
+            } else if (parcelas === 2) {
+                taxaParcelamento = 0.10; // 10% de taxa para 2 parcelas
+            } else if (parcelas === 3) {
+                taxaParcelamento = 0.15; // 15% de taxa para 3 parcelas
+            } else {
+                alert('Opção inválida. Por favor, escolha 1, 2 ou 3 parcelas.');
+                return;
+            }
+
+            // Atualizar o carrinho
+            updateCart();
+        }
+    });
+
     // Handle order form submission
     $('#orderForm').on('submit', function(event) {
         event.preventDefault();
@@ -28,10 +62,14 @@ $(document).ready(function() {
         const phone = $('#phone').val();
         const message = $('#message').val();
 
-        let selectedProducts = [];
-        $('input[name="product"]:checked').each(function() {
-            selectedProducts.push($(this).val());
-        });
+        // Obter os produtos selecionados
+        let products = selectedProducts.join(', ');
+
+        // Se a opção de pagamento for parcelado, adicionar informações sobre o parcelamento
+        if ($('#pagamento').val() === 'parcelado') {
+            const vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
+            products += ` (${vezes}x)`;
+        }
 
         const params = {
             name: name,
@@ -39,7 +77,7 @@ $(document).ready(function() {
             email: email,
             phone: phone,
             message: message,
-            products: selectedProducts.join(', ')
+            products: products
         };
 
         // Display loading indicator
@@ -69,21 +107,29 @@ $(document).ready(function() {
     });
 
     function updateCart() {
-        let total = 0;
-        let items = [];
+        total = 0;
+        selectedProducts = [];
 
         $('input[name="product"]:checked').each(function() {
             const item = $(this).val();
             const price = parseFloat($(this).data('price'));
 
-            items.push(item + ' - R$ ' + price.toFixed(2));
+            selectedProducts.push(item);
             total += price;
         });
 
-        $('#cartItems').html(items.map(item => '<li>' + item + '</li>').join(''));
-        $('#cartTotal').text(total.toFixed(2));
+        // Calcular o valor total com a taxa de parcelamento
+        const totalComTaxa = total + (total * taxaParcelamento);
+
+        $('#cartItems').html(selectedProducts.map(item => '<li>' + item + '</li>').join(''));
+        $('#cartTotal').text(totalComTaxa.toFixed(2));
     }
 });
+
+
+
+
+
 
 
 
