@@ -12,6 +12,7 @@ body {
 .rodape{
     font-size: 0.8em;
     text-align: center;
+    padding: 30px;
 }
 header {
     background: #adff2f;
@@ -164,6 +165,7 @@ h1 .maior {
 
 .order-form button:hover {
     background-color: #555;
+    color: #00ff00;
 }
 
 .order-form input:invalid,
@@ -199,6 +201,7 @@ h1 .maior {
         position: absolute;
         top: 100%;
         left: 0;
+        padding-left: 10px;
     }
 
     header .menu ul {
@@ -303,6 +306,9 @@ h1 .maior {
 }
 .quem-somos-section{
     margin: 80px;
+}
+#pagamento{
+    text-align: center;
 }
 
 

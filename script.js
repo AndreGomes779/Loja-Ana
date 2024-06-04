@@ -48,7 +48,7 @@ $(document).ready(function() {
             } else if (parcelasSelecionadas === 2) {
                 taxaParcelamento = 0.10; // 10% de taxa para 2 parcelas
             } else if (parcelasSelecionadas === 3) {
-                taxaParcelamento = 0.15; // 15% de taxa para 3 parcelas
+                taxaParcelamento = 0.12; // 12% de taxa para 3 parcelas
             }
 
             // Atualizar o carrinho
