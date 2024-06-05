@@ -51,6 +51,11 @@ header .menu {
     display: flex;
     z-index: 1;
 }
+header .menu:hover{
+    text-shadow: 2px 2px 5px rgb(239, 243, 16), 
+    4px 4px 10px rgb(239, 243, 16), 
+    6px 6px 15px rgb(239, 243, 16);
+}
 
 header .menu ul {
     list-style: none;
