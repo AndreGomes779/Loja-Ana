@@ -31,13 +31,21 @@ $(document).ready(function() {
         } else if (option === 'parcelado') {
             // Se selecionar "PARCELADO", mostrar opção de parcelamento
             let vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
-            vezes = parseInt(vezes);
+            if (vezes !== null) {
+                vezes = parseInt(vezes);
+            }
 
             // Loop até que uma entrada válida seja fornecida
             while (vezes !== 1 && vezes !== 2 && vezes !== 3) {
+                if (vezes === null) {
+                    alert('Operação cancelada.');
+                    return; // Sai da função se o usuário cancelar o prompt
+                }
                 alert('Opção inválida. Por favor, escolha 1, 2 ou 3 parcelas.');
                 vezes = prompt('Em quantas vezes deseja parcelar? (1, 2 ou 3)');
-                vezes = parseInt(vezes);
+                if (vezes !== null) {
+                    vezes = parseInt(vezes);
+                }
             }
 
             parcelasSelecionadas = vezes; // Armazena o número de parcelas selecionadas
@@ -96,6 +104,7 @@ $(document).ready(function() {
         emailjs.send(serviceID, templateID, params)
             .then(() => {
                 alert('Pedido enviado com sucesso!');
+                alert('Aguarde nossa ligação para confirmação do pedido!');
                 $('#orderForm')[0].reset();
                 submitButton.prop('disabled', false).text('Enviar Pedido');
                 updateCart(); // Reset cart
@@ -136,6 +145,7 @@ $(document).ready(function() {
         $('#cartTotal').text(totalComTaxa.toFixed(2));
     }
 });
+
 
 
 
